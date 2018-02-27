@@ -1,0 +1,97 @@
+原文地址：
+http://www.runoob.com/linux/linux-shell.html
+在线工具：
+http://www.runoob.com/try/runcode.php?filename=helloworld&type=bash
+//============================================Shell
+//============================================Shell
+		Shell 是一个用 C 语言编写的程序，
+		它是用户使用 Linux 的桥梁。
+		Shell 既是一种命令语言，
+		又是一种程序设计语言
+		//=======================
+		Ken Thompson 的 sh 是第一种 Unix Shell，
+		Windows Explorer 是一个典型的图形界面 Shell。		
+//============================================Shell脚本
+//============================================Shell脚本
+
+		Shell 脚本（shell script），
+		是一种为 shell 编写的脚本程序。
+
+		业界所说的 shell 通常都是指 shell 脚本，
+			/**
+				shell 和 shell script 是两个不同的概念。
+
+				由于习惯的原因，简洁起见，
+				本文出现的 "shell编程" 都是指 shell 脚本编程，
+				不是指开发 shell 自身。
+			*/
+//============================================Shell 环境
+//============================================Shell 环境
+		Shell 编程跟 java、php 编程一样	
+		只要有一个能编写代码的文本编辑器
+		和
+		一个能解释执行的脚本解释器就可以了。
+			/**
+				Linux 的 Shell 种类众多，常见的有：
+				
+					Bourne Shell（/usr/bin/sh或/bin/sh）	
+							//sh(全称 Bourne Shell):
+							//是UNIX最初使用的 shell，而且在每种 UNIX 上都可以使用。
+					Bourne Again Shell（/bin/bash）			
+							//bash（全称 Bourne Again Shell）
+							// LinuxOS 默认的，它是 Bourne Shell 的扩展。
+							//与 Bourne Shell 完全兼容，..
+					C Shell（/usr/bin/csh）					
+							//csh(全称 C Shell):
+							// 是一种比 Bourne Shell更适合的变种 Shell，
+							//它的语法与 C 语言很相似。
+					K Shell（/usr/bin/ksh）					
+							//ksh (全称 Korn Shell): 
+							//集合了 C Shell 和 Bourne Shell 的优点
+							//并且和 Bourne Shell 完全兼容。
+					Shell for Root（/sbin/sh）
+					......
+			*/
+			
+		由于易用和免费，Bash 在日常工作中被广泛使用。
+		同时， Bash  也是大多数Linux 系统默认的 Shell。
+			/**
+				在一般情况下，
+				人们并不区分 
+				Bourne Shell 和 Bourne Again Shell
+				
+			所以，像 #!/bin/sh，它同样也可以改为 #!/bin/bash。	
+			*/
+			#! 告诉系统其后路径所指定的程序
+			即是
+			解释此脚本文件的 Shell 程序。
+//============================================扩展名
+//============================================扩展名
+	(1).扩展名为 sh（sh代表shell）
+	(2).扩展名并不影响脚本执行，见名知意就好，
+			//如果你用 php 写 shell 脚本，
+			//扩展名就用 php 好了。
+//============================================第一个shell脚本		
+//============================================第一个shell脚本		
+		#!/bin/bash
+		echo "Hello World !"
+		
+		#! 是一个约定的标记，
+		它告诉系统这个脚本需要什么解释器来执行，
+		即使用哪一种 Shell。	
+//============================================运行 Shell 脚本有两种方法：		
+//============================================运行 Shell 脚本有两种方法：			
+		以test.sh为例
+		//============方式一：直接运行
+				chmod +x ./test.sh  #使脚本具有执行权限
+				./test.sh  #执行脚本
+		//============方式二：作为解释器参数运行
+				/bin/sh test.sh
+				/bin/php test.php
+					//这种方式运行的脚本，
+					//不需要在第一行指定解释器信息，
+					//写了也没用
+		
+		
+		
+
