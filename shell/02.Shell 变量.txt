@@ -1,0 +1,97 @@
+//========================Shell 变量
+//========================Shell 变量
+	1).	显式地直接赋值
+		your_name="runoob.com"
+		//注意，变量名和等号之间不能有空格
+	 
+	2). 用语句给变量赋值
+		for file in `ls /etc` 
+	
+//========================使用变量	
+//========================使用变量	
+	your_name="liheng"
+	1).
+		echo $your_name
+	2).	
+		echo ${your_name}
+	/*
+	说明：
+		花括号是可选的，
+		加花括号是为了帮助解释器识别变量的边界
+		echo "I am good at ${skill}Script"
+	*/
+	推荐给所有变量加上花括号，这是个好的编程习惯。
+//========================已定义的变量，可以被重新定义	
+//========================已定义的变量，可以被重新定义	
+	your_name="tom"
+	echo $your_name
+	your_name="alibaba"	//第二次赋值的时候，使用方法和第一次相同
+	echo $your_name
+//========================只读变量	
+//========================只读变量	
+
+	#!/bin/bash
+	myUrl="http://www.w3cschool.cc"
+	readonly myUrl
+	
+	myUrl="http://www.runoob.com"	//第二次赋值将报错
+//========================删除变量	
+//========================删除变量	
+	
+	unset variable_name
+	//变量被删除后不能再次使用
+	//unset 命令不能删除只读变量。
+	
+//========================变量类型	
+//========================变量类型	
+	1).局部变量 
+			局部变量在脚本或命令中定义，仅在当前shell实例中有效，
+	2).环境变量 
+			所有的程序，包括shell启动的程序，都能访问环境变量
+			//有些程序需要环境变量来保证其正常运行
+			//必要的时候shell脚本也可以定义环境变量。
+	3).shell变量 
+			shell变量是由shell程序设置的特殊变量。
+			shell变量中有一部分是环境变量，
+			有一部分是局部变量，
+			这些变量保证了shell的正常运行
+//========================Shell 字符串	
+//========================Shell 字符串			
+			
+	1).单引号字符串
+		str='this is a string'		
+		//单引号里的任何字符都会原样输出，单引号字符串中的变量是无效的；
+		//单引号字串中不能出现单引号（对单引号使用转义符后也不行）。
+	2).双引号字符串
+		your_name='qinjx'
+		str="Hello, I know your are \"$your_name\"! \n"
+		//双引号里可以有变量
+		//双引号里可以出现转义字符	
+	3).拼接字符串	
+		your_name="qinjx"
+		greeting="hello, "$your_name" !"
+		greeting_1="hello, ${your_name} !"
+		echo $greeting $greeting_1	
+	4).获取字符串长度		
+		liheng="abcd"
+		echo ${#liheng}  
+		//加#号表示获取长度
+	5).提取子字符串
+		以下实例从字符串脚标 1 个字符开始截取 4 个字符：
+			//初始脚标为0
+		liheng="runoob is a great site"
+		echo ${liheng:1:4} # 输出 unoo
+	6).查找子字符串
+	
+		liheng="runoob is a great company"
+		echo `expr index "$liheng" is`  
+		//查找字符 "i 或 s" 的位置： is是i 或 s
+		//脚本中 "`" 是反引号
+
+	
+			
+			
+			
+	
+	
+	
