@@ -1,0 +1,8 @@
+
+//=======================linux系统limit知识
+
+/proc/sys/fs/file-max	设置内核最大的文件句柄数
+/proc/sys/fs/nr_open	设置进行最大的文件句柄数，不能超过
+
+
+
