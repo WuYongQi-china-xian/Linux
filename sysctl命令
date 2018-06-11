@@ -1,0 +1,10 @@
+sysctl 命令被用于在内核运行时动态地修改 linx  运行参数 
+
+可用的内核参数在 /proc/sys 中
+
+它包涵 一些 TCP/IP堆栈和虚拟机内存系统的高级选项
+
+sysctl kernel.hostname=I-OBS-CONSOLE01
+
+
+
