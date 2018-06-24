@@ -1,0 +1,77 @@
+自动发现与自动注册
+自动发现与自动注册
+//============================  简介
+//============================  简介
+自动发现：
+	zabbix Server主动发现所有客户端，然后将客户端登记自己的小本本上，
+	缺点zabbix server压力山大（网段大，客户端多），时间消耗多。
+
+自动注册：
+	zabbix agent主动到zabbix Server上报到，
+	登记；缺点agent有可能找不到Server（配置出错）
+		//============================  两种模式
+		//============================  两种模式
+		被动模式：默认  agent被server抓取数据 （都是在agent的立场上说）
+		主动模式：agent主动将数据发到server端 （都是在agent的立场上说）
+				//注意： 两种模式都是在agent上进行配置
+				//zabbix 的使用要在hosts文件中预先做好主机名的解析
+//============================自动发现--被动模式		
+	1). 完成zabbix Server安装
+	2). 完成agent客户端zabbix agent安装
+		注意配置Server=172.16.1.61
+	3). 在web界面上进行配置	
+		1). 配置自动发现规则
+					//使用自带的自动发现规则（进行修改）即可
+			配置 >> 自动发现 >> Local network
+				名称：	Local network
+				IP范围：172.16.1.15-25	//在ip范围内输入ip，注意格式
+				延迟：60				//延迟在实际的生产环境中要大一些，实验环境可以小一些
+		2). 创建发现动作		
+			配置 >> 动作 >> 创建动作
+				名称：Auto discovery. Linux servers.
+			勾选启用
+			
+			1).配置 >> 动作 >> Auto discovery. Linux servers. >> 条件
+				//在条件中添加条件，让添加更准确
+				....(略)
+			1).配置 >> 动作 >> Auto discovery. Linux servers. >> 操作
+				添加主机
+				启用主机
+						
+			//  然后等待者客户端自动上门就好
+			
+//============================自动注册--主动模式	
+	1). 完成zabbix Server安装
+	2). 完成agent客户端zabbix agent安装
+		//需要额外增加的配置
+				
+		vim /etc/zabbix/zabbix_agentd.conf
+		
+		原：
+			ServerActive=127.0.0.1
+			Hostname=Zabbix server
+		新：
+			ServerActive=172.16.1.61
+			#Hostname=Zabbix server
+			HostnameItem=system.hostname
+	3). 在web界面上进行配置
+		1).创建动作
+			配置 >> 动作 >> 事件源(自动注册) >> 创建动作
+				名称：自动注册
+			略
+	//配置好了之后，客户端就会主动注册到服务器
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+				
+				
+				

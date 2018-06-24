@@ -1,0 +1,30 @@
+//=============================zabbix介绍
+	Zabbix 是由 Alexei Vladishev 开发的一种网络监视、管理系统，
+	基于 Server-Client 架构。
+	可用于监视各种网络服务、服务器和网络机器等状态。
+	//======它的数据放在哪里？
+	它使用各种	Database-end (数据库端)
+	如 MySQL, PostgreSQL, SQLite, Oracle 或 IBM DB2 储存数据。
+	//======它使用的开发语言?
+	Server 端基于 C语言
+	Web 管理端 frontend(前端) 则是基于 PHP 所制作的
+//=============================zabbix监听方式	
+	Zabbix 可以使用多种方式监视
+	1).可以只使用 Simple Check 不需要安装 Client 端，
+	2).亦可基于 SMTP 或 HTTP ... 各种协定做死活监视。
+	
+	/**
+		1).在客户端如 UNIX, Windows 中安装 Zabbix Agent 之后，
+		可监视 CPU Load、网络使用状况、硬盘容量等各种状态。
+		2).而就算没有安装 Agent 在监视对象中，Zabbix 也可以经由 SNMP、TCP、ICMP、
+		利用 IPMI、SSH、telnet 对目标进行监视。
+		3).另外，Zabbix 包含 XMPP 等各种 Item 警示功能。
+	*/
+	
+//=============================	主要组成部分
+	zabbix 主要由2部分构成 zabbix server 和 zabbix agent
+				//zabbix proxy是用来管理其他的agent，作为代理
+
+
+
+

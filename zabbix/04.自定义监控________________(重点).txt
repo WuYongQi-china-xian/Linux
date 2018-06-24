@@ -1,0 +1,111 @@
+
+//============================定义监控
+//============================定义监控
+	zabbix自带模板Template OS Linux (Template App Zabbix Agent)提供CPU、内存、磁盘、网卡等常规监控，
+	
+	//只要新加主机关联此模板，就可自动添加这些监控项。
+	/**
+		意思是：客户端机器安装了监控之后，选择对了模版本，
+		那么在web上面添加该机器后会自动获取到这些监控项目。
+	*/
+	本例中使用了 自定义的模版
+	
+//============================服务器登陆人数不能超过三人，超过三人报警
+//============================服务器登陆人数不能超过三人，超过三人报警
+//============================服务器登陆人数不能超过三人，超过三人报警
+
+//=========================环境	
+	172.16.1.61	10050	//服务器
+	172.16.1.21	10050	//被监控机器
+	
+//=========================相关知识
+-1).	//正确的key ==> 应该是内置的
+	zabbix_get -s 172.16.1.21 -p 10050 -k "system.uname"
+	//没有登记的，自定义的key
+	zabbix_get -s 172.16.1.21 -p 10050 -k "login-user"
+	//写错的key ===> 把系统的key写错了
+	zabbix_get -s 172.16.1.21 -p 10050 -k "system.uname1"
+//=========================实现自定义监控	
+	
+0). 
+	key的语法
+	
+	自定义语法UserParameter
+	
+	格式:
+		UserParameter=<key>,<shell command>
+	agent注册:
+		UserParameter=login-user,who|wc -l
+		UserParameter=login-user,/bin/sh /server/scripts/login.sh
+		
+1). 
+	修改服务端配置文件 ====> agent注册 ====> 被监控的机器上操作(客户端机器)
+	修改服务端配置文件 ====> agent注册 ====> 被监控的机器上操作(客户端机器)
+	
+	[root@cache01 ~]# cd /etc/zabbix/zabbix_agentd.d/
+	[root@cache01 zabbix_agentd.d]# vim userparameter_login.conf
+	
+	UserParameter=login-user,who|wc -l
+	UserParameter=login-user2,who|wc -l
+	UserParameter=login-user3,who|wc -l
+	//key名字要唯一，多个key以行为分割
+	
+2). 重启服务(客户端机器)
+	systemctl restart zabbix-agent.service
+
+3).	在server端进行get测试(服务端机器)
+	[root@m01 ~]# zabbix_get -s 172.16.1.21 -p 10050 -k "login-user"
+	3
+	[root@m01 ~]# zabbix_get -s 172.16.1.21 -p 10050 -k "login-user2"
+	3
+	[root@m01 ~]# zabbix_get -s 172.16.1.21 -p 10050 -k "login-user3"
+	3
+	[root@m01 ~]# zabbix_get -s 172.16.1.21 -p 10050 -k "login-user4"
+	ZBX_NOTSUPPORTED: Unsupported item key.
+	
+4). 在server端注册(web操作)
+
+	1).	创建模板
+			配置 >> 模板 >> 创建模板
+				模板名称: Template Login User
+				群组: Templates
+	2). 创建应用集//应用集类似(目录/文件夹)，其作用是给监控项分类。		
+			应用集 >> 创建应用集
+				名称：安全
+				
+	3). 创建监控项
+			监控项 >> 创建监控项
+				名称: 登陆用户数量  
+				键值: login-user	//这就是前面定义的key
+				应用集：安全
+	4).创建触发器//触发器的作用：当监控项获取到的值达到一定条件时就触发报警	(根据需求创建)	
+			触发器的作用：当监控项获取到的值达到一定条件时就触发报警
+			触发器 >> 创建触发器
+				名称： 登陆用户超过3人 //该名称是报警时显示的名称。
+				表达式: {Template Login User.login-user.last()} > 3
+				严重性：灾难
+				监控项目：Template Login User;登陆用户数量（点选）
+				功能：最新的T值>N 
+			//添加后触发器中查看添加的情况
+	5).创建图形//以图形的方式展示出来监控信息		
+			图形 >> 创建图形
+				名称:					//自定义
+				监控项：Template Login User;登陆用户数量  
+	5).主机关联模板//一个主机可以关联多个模板	
+			配置 >> 主机
+	//到这里就可以通过图形查看监控信息了
+	
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 

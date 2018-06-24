@@ -1,0 +1,27 @@
+//============================ 监控全网服务器
+//============================ 监控全网服务器
+	实际需求：
+　　公司已经有了100台服务器，现在需要使用zabbix全部监控起来。 
+//===============规划方案
+	常规监控：cpu，内存，磁盘，网卡
+	 方法2：自动注册和自动发现
+
+	方法1：使用克隆的方式
+	方法2：自动注册和自动发现
+	方法3：调用zabbix api接口  curl 、python
+			开发自己的运维平台兼容zabbix的通道
+			api接口使用（curl）
+			
+		/**
+			curl -i -X POST -H 'Content-Type:application/json' -d'{"jsonrpc": "2.0", "method":"user.login","params":{"user":"Admin","password":"zabbix"},"auth": null,"id":0}' "http://10.0.0.61/zabbix/api_jsonrpc.php"
+			curl -i -X POST -H 'Content-Type:application/json' -d'{"jsonrpc": "2.0", "method": "host.get", "params": { "output": [ "hostid", "host" ], "selectInterfaces": [ "interfaceid", "ip" ] }, "id": 2, "auth": "6a450a8fc3dce71fd310cfe338746578" }' "http://10.0.0.61/zabbix/api_jsonrpc.php"
+		*/			
+
+	
+	//  这里面也是zabbix的功能和 linux自带的功能，命令等等
+	结合起来，达到最终的效果
+	
+
+
+
+		

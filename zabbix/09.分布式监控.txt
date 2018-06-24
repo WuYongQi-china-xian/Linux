@@ -1,0 +1,17 @@
+//=====================分布式监控
+	分担压力、减轻负载、多机房监控
+	
+	zabbix Server  ===》  zabbix agent （只能同一个局域网监控）
+
+	//============分担压力、降低负载（示意文字）（反向代理）
+	zabbix Server ===》  zabbix proxy  ===》zabbix agent1 agent2 agent3 。。。
+    172.16.1.61           172.16.1.21        172.16.1.0/24
+                  ===》  zabbix proxy  ===》zabbix agent4 agent5 agent6 。。。
+	//============多机房监控（示意图文字）
+	多机房监控
+	zabbix Server(北京)           ==》  zabbix proxy（每个机房搭建）  ==》 zabbix agent
+	122.71.240.233/172.16.1.61          122.71.241.11/172.16.2.21     172.16.2.0/24
+	
+	
+	
+	

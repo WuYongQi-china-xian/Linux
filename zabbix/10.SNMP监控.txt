@@ -1,0 +1,23 @@
+snmp simple network manager protocol 简单网络管理协议
+//================================
+	无法安装agent，很多前辈的监控软件都可以监控各种设备  都是通过snmp监控
+
+	简单网络管理协议（SNMP），
+	由一组网络管理的标准组成，
+	包含一个应用层协议（application layer protocol）、
+	数据库模型（database schema）和一组资源对象。
+	该协议能够支持网络管理系统，
+	用以监测连接到网络上的设备是否有任何引起管理上关注的情况。
+
+	1).安装snmp程序
+	yum -y install net-snmp net-snmp-utils
+
+	2).配置snmp程序
+	sed -i.ori '57a view systemview   included  .1' /etc/snmp/snmpd.conf
+	systemctl start snmpd.service
+
+	3).测试snmp
+	snmpwalk -v 2c -c public 127.0.0.1 sysname
+
+	4).在web界面进行配置
+

@@ -1,0 +1,75 @@
+//===================================linux安装zabbix
+
+在线linux环境：
+http://www.masswerk.at/jsuix/index.html
+	//点击 open  terminal //输入 guest 回车
+	
+//====================环境检查
+cat /etc/redhat-release
+uname -r
+getenforce
+systemctl status firewalld.service
+//====================安装方式
+
+
+	服务端快速安装脚本//服务器
+	
+	10050 
+	
+	客户端快速部署脚本//被监控机器？？？
+	
+	
+	
+
+//====================检测连通性
+	1).服务端安装zabbix-get检测工具 
+		yum install zabbix-get
+	2).在服务端进行测试
+					
+		zabbix_get -s 172.16.1.61 -p 10050 -k "system.cpu.load[all,avg1]"	//服务器
+		zabbix_get -s 172.16.1.21 -p 10050 -k "system.cpu.load[all,avg1]"	//客户机，被监控机器
+//====================初次访问(设置)
+	1).地址：
+		http://10.0.0.61/zabbix/setup.php	
+	2).检测
+	3).mysql数据密码
+	4).host与port
+	5).登陆
+	 进入登陆界面  账号Admin密码zabbix 
+	 账号Admin密码zabbix  
+	6).添加监控信息
+		1).修改"监控管理机"zabbix server
+			//意思是默认就监管的zabbix服务器本和，
+			//现在去修改这些信息
+			配置 >> 主机
+			主机名称： 要与主机名相同，这是zabbix server程序用的
+			可见名称： 显示在zabbix网页上的，给我们看的
+			修改后，要将下面的已启用要勾上
+	7).添加新的主机(被监控的主机)
+			添加被监控机器
+			配置 >> 主机 >> 创建主机
+			//注意勾选以启用
+			会填写被监控机器的IP地址
+			选择模版，完成添加
+	8).查看监控内容
+			检测中  >> 最新数据
+			//在"条件搜索"中输入名字或者IP进行搜索
+			//列表中会列出所有监控数据
+			检测中 >> 图形	
+			//图像查看
+			
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	
+	
+	
+	
