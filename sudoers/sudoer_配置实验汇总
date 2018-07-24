@@ -1,0 +1,24 @@
+ 
+//===================================实验结论
+结论：
+	1).某个账号能不能提权由是否配置了sudoer.d/中的文件决定
+		或者 /etc/sudoers 中的 ALL 决定
+	2).提权是否需要输入密码由 sudoer.d/ 文件中的 NOPASSWD: 决定
+		opuser ALL=(obs) NOPASSWD:ALL
+	 
+	3).输入谁的密码由： Defaults targetpw  决定
+		/etc/sudoers 的 Defaults targetpw  //ps:它可以放在任意位置
+		
+		1). 有这一行：提权时默认输入：root密码 	
+		2). 没有这一行：提权时默认输入：自己账号的密码
+
+	4). 使用时：默认与root作用相同，都是到root
+		sudo ls -al		
+		sudo -u root ls -al
+
+	5). 使用时： sudo -u  本用户或者root之外的用户
+			1).无法 -u 到自己
+			2).-u 到指定用户时，需要了解指定用户是否真的具有该权限
+
+
+
