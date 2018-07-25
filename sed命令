@@ -1,0 +1,61 @@
+sed是一种"流编辑器"，
+处理问题时，把当前处理的行存储在临时缓冲区中，称为 "模式空间(pattern space)"，
+接着使用
+
+
+
+ 
+sed -i 's/address="abc"/address="def"/g' test.xml	//替换
+sed -i '/address="def"/a liheng="abc" ' test.xml		// -i -a  
+sed -i 's/address="def"/address="abc" liheng="def"/g' test.xml	//替换
+
+
+//========================有则不处理，无则处理 $? 表示监听输出状态
+grep "address=" xml
+if [ $? -ne 0 ]
+then
+   sed -i 's/protocol="com.huawei.wcc.secas.Http11Protocol"/protocol="com.huawei.wcc.secas.Http11Protocol" address="172.100.33.107"/g' server.xml	
+fi
+
+ 
+
+//========================有则怎么样，无则怎么样	
+grep "address=" test.xml			//如果
+if [ $? -eq 0 ]
+then
+   sed -i 's/xx/ss/g' xml		
+else
+	sed -i '/sss/a address=""' xml
+fi	
+	
+//========================== 一行版本 
+grep "address=" server.xml ; if [ $? -ne 0 ] ; then  sed -i 's/protocol="com.huawei.wcc.secas.Http11Protocol"/protocol="com.huawei.wcc.secas.Http11Protocol" address="172.100.33.107"/g' server.xml; fi ;
+
+
+
+
+#!/bin/bash
+source /etc/profile
+pass=`cat /tmp/displace/tomcat/keypass`
+cd /opt/obs/tomcat/bin/
+result=`./kspass.sh -encrypt $pass | sed -n '3p'`
+sed -i "s/keystorePass=".*"/keystorePass=\"$result\"/g" /opt/obs/tomcat/conf/server.xml;
+
+
+maxThreads="750"  ==============> maxThreads="850"
+sed -i 's/maxThreads="[0-9]*"/maxThreads="850"/g' /opt/obs/tomcat/conf/server.xml
+
+
+
+maxThreads="750"  ==============> maxThreads="850""750"
+sed -i "s/maxThreads="[0-9]*"/maxThreads=\"850\"/g" /opt/obs/tomcat/conf/server.xml
+
+
+
+
+
+
+
+
+
+ 
