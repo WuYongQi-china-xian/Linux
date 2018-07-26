@@ -1,0 +1,34 @@
+linux报错
+fork: retry: Resource temporaril
+
+本质是linux系统无法创建更多进程导致，
+因此需要修改linux最大进程数
+//===================
+通过ulimit -a查看一些系统参数
+[root@losthost limits.d]# ulimit -a                         
+..... 
+pending signals                 (-i) 15601                
+.....           
+open files                      (-n) 500000  //可以打开的最大文件数   	 
+.....
+max user processes              (-u) 15601	 //允许用户创建的最大进程数
+.....
+ 
+//=================== 分析
+top 回车之后，再输入1 //硬件查看内存大小 
+KiB Mem :  4009208 total	//4GB
+//=================== 另一层分析 
+//3174是tomcat端口号
+lsof -n|awk '{print $2}'|sort|uniq -c|sort -nr|more |grep 3174
+
+//===================结论
+由于这台机器只有4G的内存，但是能打开的文件数却配置了50万，
+所以会导致
+fork: retry: Resource temporaril
+//=================== 解决：和另一个台机器对比后，决定 
+:;vim /etc/security/limits.conf
+* soft nofile 250000
+* hard nofile 250000 
+ulimit -n
+
+ 
