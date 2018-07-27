@@ -21,14 +21,60 @@ KiB Mem :  4009208 total	//4GB
 //3174是tomcat端口号
 lsof -n|awk '{print $2}'|sort|uniq -c|sort -nr|more |grep 3174
 
-//===================结论
-由于这台机器只有4G的内存，但是能打开的文件数却配置了50万，
-所以会导致
-fork: retry: Resource temporaril
-//=================== 解决：和另一个台机器对比后，决定 
-:;vim /etc/security/limits.conf
-* soft nofile 250000
-* hard nofile 250000 
-ulimit -n
-
  
+//============================================================================== linux_ulimit .txt
+//============================================================================== linux_ulimit .txt
+//============================================================================== linux_ulimit .txt
+
+//==============================介绍
+linux limits.conf配置文件实际上是Linux PAM(插入式认证模拟，Pluggable Authentication Modules)中pam_limits.so的配置文件，而且只针对单个会话.
+
+//==============================配置格式
+username|@groupname:	type	resource	value
+/**  说明：
+username|@groupname:	 用户名或用户组，
+						 组前面要加@，
+						可使用通配符
+type：可选	 soft hard -
+			soft 当前系统生效的设置值
+			hard 表示系统中所能设定的最大值
+			soft 限制不能与 hard高
+			- 表示同时设置 soft与hard值
+resource：
+			core 限制内核文件大小
+			date 最大数据大小
+			fsize 最大文件大小
+			memlock 最大锁定内存地址空间
+			nofile 打开文件的最大数目
+			rss 最大执行设置大小
+			stack 最大栈大小
+			cpu 以分钟为单位的cpu时间
+			noproc 进程的最大数目
+			as  地址空间限制
+			maxlogins 此用户允许登陆的最大数目
+value:	所设定的值
+
+*/
+要使limits.conf文件配置生产，必须要确保 pam_limits.so 文件被加入启动文件中，
+cat /etc/pam.d/login
+查看是否包涵：
+session required /lib/security/pam_limits.so
+
+
+//==============================设置方式1
+使用：ulimit -n 32768 设置最大描述符	 
+所有限制都可以使用这种方式进行设置，
+不过，只对当前会议有用，而有要使用root，
+//==============================设置方式2
+修改 /etc/security/limits.conf 但要重启电脑
+
+
+
+
+
+
+
+
+
+
+
