@@ -1,1 +1,14 @@
-ifconfig
+
+查看机器的IP
+
+
+1). 查询本机的IP
+  ifconfig
+2). 只查询第一个
+  ifconfig eth0
+3). 准备截取
+  ifconfig eth0 | grep "inet "
+4). 截取，处理这一行
+  ifconfig eth0 | grep "inet " | awk -F " " '{print $2}'
+  
+
