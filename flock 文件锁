@@ -1,0 +1,19 @@
+flock 
+
+
+1）.
+  vi test.sh
+
+  #! /bin/bash
+  echo "Hello World"
+  sleep 10
+2).
+  touch test.lock 
+
+3）. 锁定这个文件，运行另一个脚本
+[root@localhost ~]# flock -xn ./test.lock -c "sh /root/test.sh"
+
+4）.此时
+开启另外一个bash窗口运行
+[root@localhost ~]# flock -xn ./test.lock -c "sh /root/test.sh"
+前面 的脚本运行完之前，这个脚本就不会运行。
