@@ -1,0 +1,20 @@
+
+参数分为两部分，前一部分是接收到指定信号时将要采取的行动，后一部分是要处理的信号名
+
+格式：
+  trap command signal
+  
+ 三种不同的信号回应方式
+ 
+  第一种：
+     trap "commonds" signal-list
+     当脚本收到signal-list清单内列出的信号时，trap命令执行双引号中的命令
+  第二种：
+     trap signal-list
+     不指定任何命令，接受信号的默认操作，默认操作是结束进程的运行
+  第三种：
+     trap " " signal-list
+     指定一个空命令，允许忽视信号
+ 
+ 
+  
