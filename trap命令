@@ -46,3 +46,6 @@ SIGPROF   终止进程     统计分布图用计时器到时
 SIGUSR1   终止进程     用户定义信号1
 SIGUSR2   终止进程     用户定义信号2
 SIGVTALRM 终止进程     虚拟计时器到时  
+//====================
+示例：
+trap 'rm -f $lockFile; logger "trap a stop singal"' 1 2 3 15
