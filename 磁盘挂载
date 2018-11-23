@@ -1,0 +1,20 @@
+		df -h 查看分区
+    
+    fdisk -l 查看磁盘
+    
+    
+    	/** 
+		挂载
+		mkfs.ext4 /dev/xvde
+		
+		mount  /dev/xvde1 /opt/cloud
+		mount  /dev/xvde2 /opt/cloud/logs
+ 
+		卸载流程
+		0). umount -l /dev/xvde2
+			umount -l /dev/xvde1
+ 	
+		1). vim /etc/fstab
+			/dev/xvde2 /opt/cloud ext4 defaults 1 1
+		2). 删除对应 的文件夹
+	 */
