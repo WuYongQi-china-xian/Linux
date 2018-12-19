@@ -53,6 +53,22 @@ sed -i "s/maxThreads="[0-9]*"/maxThreads=\"850\"/g" /opt/obs/tomcat/conf/server.
 
 
 
+sed -i "/keyStorePass/ s/\(.*=\).*/\1$pwdEncryptString/" /opt/cloud/dg/iam-ssl.properties
+    /keyStorePass/              匹配这一行
+    \(.*=\)    与 \1            分组 \(内容\) 与 \1 映射
+    .                           表示任意字符
+    *                           表示一个或多个
+    
+    
+    
+cut -d ':' -f2 
+以分号分割，取第2段
+
+cut -b 2- 
+从第二个到最后一个
+
+
+
 
 
 
