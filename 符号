@@ -1,0 +1,12 @@
+1、-v是grep排除的参数，例如查询除了包含ABC的行，
+	例如 cat a.txt|grep -v 'ABC'
+2、 ^ 代表行首，
+	$ 代表行尾。 
+	^$ 是空行的意思
+
+3、^#表示首字母为#的行，
+	linux里的文件，#号开头一般都是注释内容
+4、grep -v '^$' /etc/rsyslog.conf | grep -v '^#'
+   查询/etc/rsyslog.conf文件，但是不包含空行和注释行
+
+
