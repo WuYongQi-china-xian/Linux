@@ -1,8 +1,137 @@
+//=======================几个核心概念
+文件句柄
+	files不单是文件的意思，
+	也包括打开的通讯链接(比如socket)，
+	正在监听的端口等等
+	所以有时候也可以叫做句柄(handle)
+	//常见错误：文件句柄超出限制，日志报错too many open files
+	
+	/**	相关配置
+	* soft nofile 500000
+	* hard nofile 500000
+	*/
+	
+	/**
+	*	1). 用户重新进入才能查看到修改的结果 
+	*	2). 以进程为单位，一个进行能打开多少个句柄
+	*/
+	
+	0). 查看某个进程启动的时候指定的文件句柄
+		16352 为进程PID
+		cat /proc/16352/limits
+	
+	1). 查看用户的 配额 ，相当于查看 /etc/security/limits.conf 里面配置的值 
+		ulimit -a | grep "open files"
+	2). 查看已产生的句柄，以进程为单位
+		lsof -n|awk '{print $2}'|sort|uniq -c|sort -nr|more
+	  //第一列是打开的句柄数，第二列是进程ID
 
+进程数
+	不仅包含该用户创建的进程，还包含子进程、线程等
+	//常见错误：fork: retry: Resource temporaril
+	//本质是linux系统无法创建更多进程导致，
+	//因此需要修改linux最大进程数
+	ulimit -a | grep "max user processes"	//允许用户创建的最大进程数
+	
+ 
+	ps -efT | wc -l		//所有用户加起来的进程数
+	
+	/**	相关配置
+	* soft nproc 4096
+	* hard nproc 4096
+	*/
+	
+core文件
+	它其实就是内存的映像，当程序崩溃时，存储内存的相应信息
+	主用用于对程序进行调试。当程序崩溃时便会产生core dump 文件
+	默认生成位置与可执行程序位于同一目录下，文件名为core.***，其中***是某一数字。
+	// 进行崩溃后的堆栈打印
+	//0 表示不打印在
+	/**	相关配置
+	* soft core 0
+	* hard core 0
+	*/
+		
 //=======================linux系统limit知识
 
 /proc/sys/fs/file-max	设置内核最大的文件句柄数
 /proc/sys/fs/nr_open	设置进行最大的文件句柄数，不能超过
 
+
+
+
+//==================================================================================介绍
+//==================================================================================介绍
+//==================================================================================介绍
+linux limits.conf 配置文件
+实际上是Linux PAM
+(插入式认证模拟，Pluggable Authentication Modules)中pam_limits.so的配置文件，
+而且只针对单个会话.
+
+//==============================配置文件
+	1).文件位置
+		/etc/security/limits.conf
+	2).格式
+		1).示例：
+			* 	  soft  nproc 16384
+			* 	  hard  nproc 16384
+			root  soft  nofile  65536
+			root  hard  nofile  65536
+		2).说明
+			username|@groupname		type	resource		value
+
+
+username|@groupname	
+			//用户名或用户组，
+			//组前面要加@，
+			//可使用通配符
+type：可选	 
+			// soft hard -
+			// soft 当前系统生效的设置值
+			// hard 表示系统中所能设定的最大值	//soft 限制不能与 hard高
+			// - 表示同时设置 soft与hard值
+resource：
+			core 限制内核文件大小
+			nofile 打开文件的最大数目
+			noproc 进程的最大数目
+			//=======
+			date 最大数据大小
+			fsize 最大文件大小
+			memlock 最大锁定内存地址空间
+			rss 最大执行设置大小
+			stack 最大栈大小
+			cpu 以分钟为单位的cpu时间
+			as  地址空间限制
+			maxlogins 此用户允许登陆的最大数目
+			
+value:	 所设定的值
+
+			/**
+				注意：
+				要使limits.conf文件配置生效，
+				必须要确保 pam_limits.so 文件被加入启动文件中，
+				cat /etc/pam.d/login
+				查看是否包涵：session required /lib/security/pam_limits.so
+			*/
+
+
+//==============================命令
+
+查看物理CPU个数
+cat /proc/cpuinfo| grep "physical id" | sort| uniq| wc -l
+
+# 查看每个物理CPU中core的个数(即核数)
+cat /proc/cpuinfo| grep "cpu cores"| uniq
+
+# 查看逻辑CPU的个数
+cat /proc/cpuinfo| grep "processor"| wc -l
+
+
+ulimit -a
+
+top 回车之后，  
+//KiB Mem :  4009208 total	//4GB
+输入1
+//查看CPU个数		
 
 
