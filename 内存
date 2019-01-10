@@ -1,0 +1,22 @@
+
+//==================== cat /proc/meminf
+
+MemTotal:       395329732 kB		//所有可用的RAM大小 
+MemFree:        295162928 kB		//未使用的RAM大小
+MemAvailable:   338604524 kB		
+Buffers:         7649740 kB			//块设置缓存区大小
+Cached:         34171496 kB			//文件系统的缓存
+
+
+
+//==================== free -h
+
+total        总计物理内存的大小
+used         已使用多大
+free		 可用多少
+shared       多个进程共享内存的总额
+buff/cache   磁盘缓存的大小
+
+
+
+
