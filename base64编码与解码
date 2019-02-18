@@ -1,0 +1,12 @@
+	
+  //======================================= linux命令
+  
+  echo "UDSIAMSTUBTEST000470" | base64 -i			//编码 base64
+	echo VURTSUFNU1RVQlRFU1QwMDA0NzAK | base64 -d	//解码 base64
+  
+  //======================================= java代码解码
+  
+  
+  new String(new BASE64Decoder().decodeBuffer(config.getProperty("ak")))
+  
+  
