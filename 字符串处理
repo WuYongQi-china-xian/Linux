@@ -1,0 +1,11 @@
+循环拆分加
+拼接
+
+region_uds_region_name_list=(`echo "${region_uds_region_name}" | sed 's/,/ /g'`)
+region_uds_region_name_list_result=\"
+for a in ${region_uds_region_name_list[@]}
+do
+        region_uds_region_name_list_result+=$a\"\,
+done
+region_uds_region_name_list_result=${region_uds_region_name_list_result%?}
+echo $region_uds_region_name_list_result
