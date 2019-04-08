@@ -1,0 +1,40 @@
+
+在本地配置一些访问无法到达的机器
+//=======================================
+
+1). 查看命令
+
+	iptables -t nat -nL --line-number
+ 
+2). 
+	输入序号
+	echo 1 > /proc/sys/net/ipv4/ip_forward
+	
+3).
+	8443 是真实地址的 端口号
+	2.22.54.23 是目标的IP
+	2.22.54.251 是当前的一个机器的弹性IP，//也就是我本地能访问的一个机器的私有IP
+
+	//PREROUTING 类型	
+	iptables -t nat -A PREROUTING -p tcp --dport 8443 -j DNAT --to-destination 2.22.54.23
+	//POSTROUTING 类型
+	iptables -t nat -A POSTROUTING -p tcp -d 2.22.54.23 --dport 8443 -j SNAT --to-source 2.22.54.251
+
+
+	https://100.95.172.89:8443
+	sysadmin  WBadmin@123
+	obs WH@2017!
+
+4). 如果添加错误，可以进行删除在
+	/**
+		//查看
+		iptables -t nat -nL --line-number
+
+		//删除，根据类型 删除防火墙规则：  1表示 序号
+		iptables -t nat -D PREROUTING 1
+		iptables -t nat -D OUTPUT 1
+		iptables -t nat -D POSTROUTING 1
+		iptables -t nat -F POSTROUTING
+	*/
+5). 最终访问地址
+	https://{{我能访问的外网IP}}:8443
