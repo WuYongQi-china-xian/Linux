@@ -1,0 +1,49 @@
+网络_vlan
+
+0). 
+ip a 或 ifconfig
+	查看IP和和子接口信息
+	
+	发现本网卡没有和  2.22.53.16、2.22.53.17  相通的IP地址
+	所能不能ping通网关
+	因此需要加一个VLAN
+	
+	lo        本地回还						
+	eth0	  真实网卡
+	eth1	  真实网卡
+	eth1.2221 //子接口、私有IP、局域网IP 一个意思
+	eth1.1089 //子接口、私有IP、局域网IP 一个意思
+
+1).cps host-list 
+   //获取网络平面
+
+2).//查看网络平面
+	neutron net-show  DMZ_Service
+		//provider:segmentation_id  | 1091			//这个是VLAN ID
+		//subnets | d94cab42-08a6-4021-a3eb-7cbbb986846f	
+		
+
+3).//获取一个IP地址
+	neutron subnet-show  subnets		
+	neutron subnet-show  d94cab42-08a6-4021-a3eb-7cbbb986846f			
+
+	//allocation_pools  | {"start": "2.22.53.2", "end": "2.22.53.250"} 2 -250之外的IP在
+	//2.22.53.251
+
+4).创建一个VLAN
+
+	cd /etc/sysconfig/network-scripts
+	vim ifcfg-eth1.1091	
+			/***
+				DEVICE=eth1.1091		// segmentation_id
+				ONBOOT=yes
+				BOOTPROTO=static
+				IPADDR=2.22.53.251		
+				NETMASK=255.255.255.0
+				VLAN=yes
+			*/
+			
+5). 使之生效
+	ifup ifcfg-eth1.1091
+
+
