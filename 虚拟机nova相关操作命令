@@ -1,0 +1,68 @@
+删除虚拟机命令
+for i in `nova list | grep I-APICOM | awk '{print $2}'`;do nova delete $i; done
+
+查看虚拟机状态：
+- nova list --all-t <br/>
+
+查看虚拟机网络平面
+- neutron net-list
+
+查看虚拟机的no_vnc地址
+- nova get-vnc-console 虚拟机ID novnc
+
+查看虚拟机网络平面端口
+- neutron port-list
+
+查看系统卷和磁盘卷
+- cinder list | grep DMK
+- cinder list  --all-t
+
+查看镜像状态
+- glance image-show 镜像id
+
+neutron security-group-list 
+neutron security-group-list  查看安全组列表
+neutron security-group-show 安全组ID
+查看某个"安全组"的详细信息
+security_group_rules //安全组规则							
+//ipv4 egress	//表示 出去的网络 
+//ipv4 ingress	//表示 进入的网络 
+tenant_id	//这个和虚拟机列表中的 tenant_id 个组
+										
+//查看虚拟机所做的操作
+nova instance-action-list 虚拟机ID
+nova instance-action-list 0851f413-3e5b-434f-a470-bba0d7092b99
+
+//查询 point ID和Net ID
+nova interface-list 虚拟机ID	
+nova interface-list f0831c77-d3c9-497c-a144-72a8aed84c6a
+
+//关闭网络平面的默认安全组 Net ID
+neutron net-update --port-security-enabled False Net ID    
+neutron net-update --port-security-enabled False 39ffdfa2-d918-4b48-a4b8-0376b3fda164
+
+//查看安全组，通过 NET ID
+//neutron net-show cd0f4873-0198-4d1c-86e5-a811e0b666e3
+
+//重新启动					
+nova reboot f0831c77-d3c9-497c-a144-72a8aed84c6a
+
+//关机机器的默认安全组(两台) //PORINTDI 
+neutron port-update a6376f66-d8bd-4d23-8f06-0b680f50e418 --no-security-groups
+neutron port-update a6376f66-d8bd-4d23-8f06-0b680f50e418 --port-security-enabled False
+
+//查看安全组配置通过PORT ID
+//neutron  port-show  Port ID 
+//neutron  port-show  90fcbe93-1104-4e0b-a34b-5b57bd0f866a
+//========================手动安装DHCP
+						cps host-list	//获取到id
+						cps role-host-add --host 1C12BF37-7892-DF49-AFBA-2E1945097F96 dhcp
+						cps role-host-add --host BA8FDB76-C2F8-CB4F-BFCD-327AE87560A4 dhcp			
+						cps role-host-add --host 23B7091B-7426-5A4A-BEB9-26B38A6A58DA dhcp
+						cps role-host-add --host 7DFC43C1-4164-B041-BB22-3A17FB5264ED dhcp
+						cps role-host-add --host C775BDD7-D38D-5246-A678-7B92B91A1B15 dhcp
+						cps role-host-add --host E81C86F3-0EBE-B847-845A-D33CEF4A633C dhcp
+						cps role-host-add --host EF91DCD1-8699-C147-807D-04C2F6B594C9 dhcp
+						cps commit					
+						cps template-ext-params-add --parameter ovs_neutron_plugin.agent.enable_check_l3=False --service network-agent neutron-openvswitch-agent
+						cps commit
