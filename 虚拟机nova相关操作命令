@@ -55,14 +55,14 @@ neutron port-update a6376f66-d8bd-4d23-8f06-0b680f50e418 --port-security-enabled
 //neutron  port-show  Port ID 
 //neutron  port-show  90fcbe93-1104-4e0b-a34b-5b57bd0f866a
 //========================手动安装DHCP
-						cps host-list	//获取到id
-						cps role-host-add --host 1C12BF37-7892-DF49-AFBA-2E1945097F96 dhcp
-						cps role-host-add --host BA8FDB76-C2F8-CB4F-BFCD-327AE87560A4 dhcp			
-						cps role-host-add --host 23B7091B-7426-5A4A-BEB9-26B38A6A58DA dhcp
-						cps role-host-add --host 7DFC43C1-4164-B041-BB22-3A17FB5264ED dhcp
-						cps role-host-add --host C775BDD7-D38D-5246-A678-7B92B91A1B15 dhcp
-						cps role-host-add --host E81C86F3-0EBE-B847-845A-D33CEF4A633C dhcp
-						cps role-host-add --host EF91DCD1-8699-C147-807D-04C2F6B594C9 dhcp
-						cps commit					
-						cps template-ext-params-add --parameter ovs_neutron_plugin.agent.enable_check_l3=False --service network-agent neutron-openvswitch-agent
-						cps commit
+cps host-list	//获取到id
+cps role-host-add --host 1C12BF37-7892-DF49-AFBA-2E1945097F96 dhcp
+cps role-host-add --host BA8FDB76-C2F8-CB4F-BFCD-327AE87560A4 dhcp			
+cps role-host-add --host 23B7091B-7426-5A4A-BEB9-26B38A6A58DA dhcp
+cps role-host-add --host 7DFC43C1-4164-B041-BB22-3A17FB5264ED dhcp
+cps role-host-add --host C775BDD7-D38D-5246-A678-7B92B91A1B15 dhcp
+cps role-host-add --host E81C86F3-0EBE-B847-845A-D33CEF4A633C dhcp
+cps role-host-add --host EF91DCD1-8699-C147-807D-04C2F6B594C9 dhcp
+cps commit					
+cps template-ext-params-add --parameter ovs_neutron_plugin.agent.enable_check_l3=False --service network-agent neutron-openvswitch-agent
+cps commit
