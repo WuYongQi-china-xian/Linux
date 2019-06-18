@@ -1,0 +1,2 @@
+查找指定文件夹下大于500M的文件
+find /pkg_repo/ -type f -size +500M -print0 | xargs -0 du -h
