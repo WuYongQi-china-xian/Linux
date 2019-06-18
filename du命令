@@ -1,0 +1,2 @@
+查看指定目录下文件夹的大小并从大到小显示前5个文件夹大小
+du -hm /pkg_repo/tmp --max-depth=1 | sort -nr | head -5
