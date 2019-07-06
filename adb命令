@@ -1,0 +1,33 @@
+adb devices 查看已连接的移动终端 
+adb push D:\test\pc.xlsx sdcard/mobile.xlsx pc上的pc.xlsx文件推送到移动终端上的sdcard目录下并把文件名称改成mobile.xlsx 
+adb pull sdcard/mobile.xlsx D:\test\pc.xlsx 移动终端上的sdcard/mobile.xlsx文件 拉到pc上，拷贝之后文件名称不变 
+adb install D:\test\demo.apk 安装demo.apk到移动终端 
+adb uninstall demo.apk 删除移动终端上demo.apk 
+adb kill-server 终结adb链接 
+adb start-server 重新开启adb命令 
+adb shell 进入shell命令
+有时移动终端不能正常 链接pc，这是我们之前的解决方法时重启IDE，现在学会adb命令了，不用重启IDE了。
+只要先kill-server 再start-server 就可以重新链接移动终端了
+------------------------------------------------------------
+怎么进行monkey测试？ 
+1. adb shell 进入shell命令 
+2. mokey 3 进行三次随机点击事件
+如果要测试制定的apk 
+1. adb shell 进入shell命令 
+2. monkey -p com.cn.packageName 3 com.cn.packageName包随机点击三次
+-------------------------------------------------------------------
+在push或pull时如果有多个移动终端连到pc，此时需要制定要操作的移动终端名称 ,例如adb -s emulator-5556 push D:\test\pc.xlsx sdcard/mobile.xlsx 。
+其中-s emulator-5556 表示此adb命令指向名称为emulator-5556 设备。那么终端名称怎么查看呢？
+在DDMS上依次点击Tools-Android-Android Device Monitor
+----------------------------------------------------
+斜杠不要颠倒顺序了，pc目录用反斜杠，移动终端目录用斜杠
+---------------------------------------------------
+主要目录 
+通过ddms可以查看移动终端上的所有文件，其中最主要的有四个 
+system\app 系统apk目录
+sbin\sdcard 快捷方式
+storage\sdcard SD卡目录
+data\app 第三方应用目录
+data\data 目录最常用，就是应用私有目录，只有此应用才能更改，查看，删除，添加权限的目录。
+这儿有cache缓存子目录，database数据库子目录，file文件子目录等几个重要目录 
+----------------------------------------------------------------------------------
