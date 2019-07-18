@@ -4,3 +4,54 @@ ansible-doc -s 模块名称 #查询该模块的用法和参数
 ansible -i ip1,ip2, -m 模块名称 -a "参数设置" -u 用户名 -k #使用用户名的用户连接到虚拟机上执行一下模块
 ansible -i ip1,ip2, -m 模块名称 -a "参数设置" -u 用户名 -k -K #使用用户名的用户连接到虚拟机上sudo提权到root执行一下模块
 ansible -i ip1,ip2, -m 模块名称 -a "参数设置" -u 用户名 -k --su-user=root --su-pass --su #使用用户名的用户连接到虚拟机上su提权到root执行一下模块
+---------------------------------------------------------------------------------------
+ansible-playbook的目录结构
+group_vars/all/all #配置静态变量初始值得地方
+roles/角色名文件夹/tasks/main.yml #配置ansible模块代码逻辑编写的地方
+roles/角色名文件夹/files/文件名 #配置ansible的file和copy模块传送文件和包的地方
+roles/角色名文件夹/templates/文件名 #配置ansible的template模块传送渲染文件的地方
+rukou.yml #入口文件
+---
+- name: xxx
+  hosts: xxx
+  vars:
+    source_storage: xxx
+  roles:
+    - xxx
+    
+hosts #配置推送目标机的地方
+[dmk]
+primary ansible_ssh_user={{user_name}} ansible_ssh_host={{primaryIp}}
+standby ansible_ssh_user={{user_name}} ansible_ssh_host={{standbyIp}}
+
+rukou.sh #入口bash
+TMOUT=0
+echo "ansible-playbook rukou.yml -i hosts -k -K"
+ansible-playbook rukou.yml -i hosts -k -K
+if [ $? -ne 0 ]; then
+    exit 1
+fi
+exit 0
+
+ansible.cfg 配置ansible常规初始值的地方
+[defaults]
+forks             = 20
+timeout           = 60
+transport         = smart
+host_key_checking = False
+
+# plays will gather facts by default, which contain information about
+# the remote system.
+#
+# smart - gather by default, but don't regather if already gathered
+# implicit - gather by default, turn off with gather_facts: False
+# explicit - do not gather by default, must say gather_facts: True
+gathering         = explicit
+
+display_skipped_hosts = False
+
+[ssh_connection]
+ssh_args          = -o ControlMaster=auto -o ServerAliveInterval=30 -o ControlPersist=120s
+pipelining        = True
+scp_if_ssh        = True
+-----------------------------------------------------------------------------------------------
