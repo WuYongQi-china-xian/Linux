@@ -1,0 +1,6 @@
+ansible常用命令
+ansible-doc -l #查询已有的ansible模块
+ansible-doc -s 模块名称 #查询该模块的用法和参数
+ansible -i ip1,ip2, -m 模块名称 -a "参数设置" -u 用户名 -k #使用用户名的用户连接到虚拟机上执行一下模块
+ansible -i ip1,ip2, -m 模块名称 -a "参数设置" -u 用户名 -k -K #使用用户名的用户连接到虚拟机上sudo提权到root执行一下模块
+ansible -i ip1,ip2, -m 模块名称 -a "参数设置" -u 用户名 -k --su-user=root --su-pass --su #使用用户名的用户连接到虚拟机上su提权到root执行一下模块
