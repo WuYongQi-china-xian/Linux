@@ -12,3 +12,4 @@ kubectl exec -it 'pod名' bash #进入pod
 docker ps | grep 'docker名称' #查询指定docker的运行进程。
 docker logs -f 'docker运行进程的id' #实时查看docker的运行日志。
 docker exec -it 'docker运行进程的id' bash #以bash的方式进入指定的docker
+Kubernetes 设计理念http://docs.kubernetes.org.cn/249.html
