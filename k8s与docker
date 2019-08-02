@@ -31,3 +31,4 @@ kubectl describe node ${nodeName} –n ${namespace}| grep -C 5 Allocatable #检�
 kubectl get po --all-namespaces -o wide | grep ${nodeName} | wc -l#检查待调度节点的pod总数。
 kubectl -n ${namespace} get po -o wide | grep ${nodeName}#检查待调度节点上已存在的pod
 kubectl -n ${namespace} get po ${上一步查询到的podName} -o yaml | grep "Exclusive" #检查上述查询到的待调度节点上已存在的pod是否具有独占属性
+docker rmi -f $(docker images|grep project-manager-service|awk '{print $3}') #批量删除project-manager-service的镜像
