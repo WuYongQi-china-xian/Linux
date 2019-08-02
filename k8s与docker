@@ -14,3 +14,20 @@ docker logs -f 'docker运行进程的id' #实时查看docker的运行日志。
 docker exec -it 'docker运行进程的id' bash #以bash的方式进入指定的docker
 Kubernetes 设计理念http://docs.kubernetes.org.cn/249.html
 Cloud Blueprints and Blueprint Reference:https://docs.oracle.com/cd/E24628_01/doc.121/e28814/cloud_blueprint_ref.htm#EMCLO1934
+kubectl -n kube-system get pod job-scheduler-6c7ddcdbfd-kqxdw -o yaml | grep -C 2 "nodeSelector" #查看pod的nodeSelector
+     subPath: redis_root.key
+  dnsPolicy: ClusterFirst
+  nodeSelector:
+    aiep.manage.mls.taskmanager: "1"
+  restartPolicy: Always
+kubectl -n kube-system  get node -l aiep.manage.mls.taskmanager="1" #3.	查看满足这个nodeSelector的节点。
+PROJECT       NAME                       STATUS    ROLES     AGE       VERSION
+kube-system   manas-service-op-svc-cfe   Ready     <none>    26d       v2.5.21-FusionStage6.5.RP3-B160-dirty
+kubectl -n ies get node $NODE_NAME --show-labels #查看某个节点的所有label。
+kubectl get node $NODE_NAME -n om -o yaml | grep taint #检查待调度节点上的taints。
+kubectl -n ies get pod $POD_NAME -o yaml | grep "tolerations" #检查pod中的tolerations。
+kubectl -n ies get pod $POD_NAME -o yaml # 检查pod的亲和性和反亲和性配置
+kubectl describe node ${nodeName} –n ${namespace}| grep -C 5 Allocatable #检查待调度节点的配额限制。
+kubectl --all-namespace get pod -o wide | grep ${nodeName} | wc -l#检查待调度节点的pod总数。
+kubectl -n ${namespace} get po -o wide | grep ${nodeName}#检查待调度节点上已存在的pod
+kubectl -n ${namespace} get po ${上一步查询到的podName} -o yaml | grep "Exclusive" #检查上述查询到的待调度节点上已存在的pod是否具有独占属性
