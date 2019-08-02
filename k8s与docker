@@ -33,4 +33,5 @@ kubectl -n ${namespace} get po -o wide | grep ${nodeName}#检查待调度节点�
 kubectl -n ${namespace} get po ${上一步查询到的podName} -o yaml | grep "Exclusive" #检查上述查询到的待调度节点上已存在的pod是否具有独占属性
 docker rmi -f $(docker images|grep project-manager-service|awk '{print $3}') #批量删除project-manager-service的镜像
 《kubernetes权威指南》
-1. rc会创建pod 然后创建service与pod关联，关联方式通过过标签名匹配。每个pod创建出来会生成labelname_HOST和labelname_PORT的环境变量用于pod之间的交互。
+1.rc会创建pod 然后创建service与pod关联，关联方式通过过标签名匹配。每个pod创建出来会生成labelname_HOST和labelname_PORT的环境变量用于pod之间的交互。
+2.node信息同步可以通过kube-controller-manager的启动参数--node-sync-period设置同步的时间周期。
