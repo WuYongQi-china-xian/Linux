@@ -26,7 +26,7 @@ kube-system   manas-service-op-svc-cfe   Ready     <none>    26d       v2.5.21-F
 kubectl -n ies get node $NODE_NAME --show-labels #查看某个节点的所有label。
 kubectl get node $NODE_NAME -n om -o yaml | grep taint #检查待调度节点上的taints。
 kubectl -n ies get pod $POD_NAME -o yaml | grep "tolerations" #检查pod中的tolerations。
-kubectl -n ies get pod $POD_NAME -o yaml # 检查pod的亲和性和反亲和性配置
+kubectl -n ies get pod $POD_NAME -o yaml | grep podaffinity -C 5 # 检查pod的亲和性和反亲和性配置
 kubectl describe node ${nodeName} –n ${namespace}| grep -C 5 Allocatable #检查待调度节点的配额限制。
 kubectl --all-namespace get pod -o wide | grep ${nodeName} | wc -l#检查待调度节点的pod总数。
 kubectl -n ${namespace} get po -o wide | grep ${nodeName}#检查待调度节点上已存在的pod
