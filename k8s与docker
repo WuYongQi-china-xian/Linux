@@ -35,3 +35,4 @@ docker rmi -f $(docker images|grep project-manager-service|awk '{print $3}') #�
 《kubernetes权威指南》
 1.rc会创建pod 然后创建service与pod关联，关联方式通过过标签名匹配。每个pod创建出来会生成labelname_HOST和labelname_PORT的环境变量用于pod之间的交互。
 2.node信息同步可以通过kube-controller-manager的启动参数--node-sync-period设置同步的时间周期。
+3.kubectl scale rc redis-slave --replicas=3 #通过修改RC副本的数量，来实现Pod的动态缩放(redis-slave为RC的名称)
