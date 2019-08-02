@@ -28,6 +28,6 @@ kubectl get node $NODE_NAME -n om -o yaml | grep taint #检查待调度节点上
 kubectl -n ies get pod $POD_NAME -o yaml | grep "tolerations" #检查pod中的tolerations。
 kubectl -n ies get pod $POD_NAME -o yaml | grep podaffinity -C 5 # 检查pod的亲和性和反亲和性配置
 kubectl describe node ${nodeName} –n ${namespace}| grep -C 5 Allocatable #检查待调度节点的配额限制。
-kubectl --all-namespace get pod -o wide | grep ${nodeName} | wc -l#检查待调度节点的pod总数。
+kubectl get po --all-namespaces -o wide | grep ${nodeName} | wc -l#检查待调度节点的pod总数。
 kubectl -n ${namespace} get po -o wide | grep ${nodeName}#检查待调度节点上已存在的pod
 kubectl -n ${namespace} get po ${上一步查询到的podName} -o yaml | grep "Exclusive" #检查上述查询到的待调度节点上已存在的pod是否具有独占属性
