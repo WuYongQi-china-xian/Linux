@@ -2,7 +2,7 @@
 备注：
 K8s常在在pass节点上使用
 Docker常在node节点上使用
-kubectl="/opt/kubectl --client-certificate=/var/paas/srv/kubernetes/server.cer --client-key=/var/paas/srv/kubernetes/server_key.pem --certificate-authority=/var/paas/srv/kubernetes/ca.cer -s https://172.31.102.108:4443/opt/kubectl --client-certificate=/var/paas/srv/kubernetes/server.cer --client-key=/var/paas/srv/kubernetes/server_key.pem --certificate-authority=/var/paas/srv/kubernetes/ca.cer -s https://x.x.x.x:4443"
+kubectl="/opt/kubectl --client-certificate=/var/paas/srv/kubernetes/server.cer --client-key=/var/paas/srv/kubernetes/server_key.pem --certificate-authority=/var/paas/srv/kubernetes/ca.cer -s https://x.x.x.x:4443/opt/kubectl --client-certificate=/var/paas/srv/kubernetes/server.cer --client-key=/var/paas/srv/kubernetes/server_key.pem --certificate-authority=/var/paas/srv/kubernetes/ca.cer -s https://x.x.x.x:4443"
 命令中标红的为变量值
 kubectl get pod -n kube-system #获取所有的pod并将信息返现在终端
 kubectl logs -f -n kube-system 'pod名'#实时查看pod的运行日志。
