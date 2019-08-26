@@ -1,0 +1,52 @@
+1  查看swap 空间大小(总计)： 
+     # free -m          默认单位为k, -m 单位为M
+　　               total       used       free     shared    buffers     cached
+　　Mem:           377        180        197          0         19        110
+　　-/+ buffers/cache:         50        327
+　　Swap:          572          0        572
+ 
+ 
+ 
+2  查看swap 空间(file(s)/partition(s))：
+ 
+      包括 文件 和 分区 的详细信息
+ 
+　　# swapon -s
+　　等价于
+　　# cat /proc/swaps
+ 
+ 
+ 
+
+3 添加交换空间
+　　两种选择：添加一个交换分区或添加一个交换文件。推荐你添加一个交换分区；不过，若你没有多少空闲空间可用，则添加交换文件。
+ 
+    3.1 添加一个交换分区
+　　步骤如下：
+      a  使用fdisk来创建交换分区（假设 /dev/sdb2 是创建的交换分区）
+      b 使用 mkswap 命令来设置交换分区：
+　　 # mkswap /dev/sdb2
+      c 启用交换分区：
+　　 # swapon /dev/sdb2
+      d 写入/etc/fstab,以便在引导时启用：
+　　    /dev/sdb2 swap swap defaults 0 0
+ 
+    3.2 添加一个交换文件
+　　a  创建大小为512M的交换文件：
+　　 # dd if=/dev/zero of=/swapfile1 bs=1024k count=512
+　　b 使用 mkswap 命令来设置交换文件：
+　　 # mkswap /swapfile1
+　　c 启用交换分区：
+　　 # swapon /swapfile1
+　　d 写入/etc/fstab,以便在引导时启用：
+　　  /swapfile1 swap swap defaults 0 0
+ 
+　　新添了交换分区并启用它之后，请查看 cat /proc/swaps 或 free 命令的输出来确保交换分区已被启用了。
+ 
+4 删除交换空间：
+　　a 禁用交换分区：
+　　 # swapoff /dev/sdb2
+　　b 从 /etc/fstab 中删除项目；
+　　c 使用fdisk或yast工具删除分区。
+ 
+　　删除交换文件步骤同上。
