@@ -93,6 +93,6 @@ http://www.runoob.com/try/runcode.php?filename=helloworld&type=bash
 					//不需要在第一行指定解释器信息，
 					//写了也没用
 		
-		
-		
+# 上下翻历史命令
+export HISTSIZE=500	
 
