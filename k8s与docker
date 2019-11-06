@@ -41,3 +41,7 @@ docker rmi -f $(docker images|grep project-manager-service|awk '{print $3}') #�
 -----------------------------------------------------------------------------------------------------------
 从镜像仓库拉去 docker pull 172.31.100.57:20202/gde/manas-job-scheduler:1.0.0
 推送镜像到镜像仓库  docker push 172.31.100.57:20202/gde/manas-job-scheduler:1.0.0
+------------------------------------
+拉取镜像docker pull [OPTIONS] NAME[:TAG|@DIGEST]
+存储镜像为tar包docker save -o my_ubuntu_v3.tar runoob/ubuntu:v3
+存储镜像为tar.gz包docker save myimage:latest | gzip > myimage_latest.tar.gz
